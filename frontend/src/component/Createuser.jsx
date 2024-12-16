@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 export default function Createuser() {
   const [user, setUser] = useState({
@@ -14,7 +14,7 @@ console.log(user)
 const handleClick = async (e)=>{
   e.preventDefault();
   try {
-    await axios.post("http://localhost:3000/api/user/adduser", user)
+    await axios.post("http://localhost:8080/api/user/adduser", user)
   } catch (error) {
     
   }

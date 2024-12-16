@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 // CORS Configuration
 app.use(cors({
     origin: '*', // Allow all origins (can specify a specific origin if needed)
-    methods: ['GET', 'PUT','POST'], // Allow specific HTTP methods
+    methods: ['GET', 'PUT','POST','DELETE'], // Allow specific HTTP methods
     credentials: true,
 }));
 
@@ -21,7 +21,7 @@ app.get('/',(req, res) => {
 
 
 // Start the server
-const PORT = 3000;
+const PORT = 8080;
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}/`);
 });

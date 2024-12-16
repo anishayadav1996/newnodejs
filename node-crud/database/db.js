@@ -1,4 +1,4 @@
-import mysql from "mysql";
+import mysql from 'mysql2';
 
 export const db = mysql.createConnection({
     host: 'localhost',
@@ -9,10 +9,13 @@ export const db = mysql.createConnection({
     connectionLimit: 10,
     queueLimit: 0
 });
-     db.connect((error)=>{
-        if(error) throw error ;
-        console.log("connection successfully !");
-        
-     })
+
+db.connect((error) => {
+    if (error) {
+        console.error("Database connection failed: ", error.message);
+        return;
+    }
+    console.log("Database connected successfully!");
+});
 
 export default db;

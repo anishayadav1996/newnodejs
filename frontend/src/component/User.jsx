@@ -1,15 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import {Link} from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 
 export default function User() {
   // Initialize user state as an empty array to avoid undefined issues with .map
   const [user, setUser] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/user/fetch");
+        const res = await axios.get("http://localhost:8080/api/user/fetch");
         console.log(res);
         setUser(res.data); // Ensure `res.data` matches the expected format
       } catch (error) {
@@ -19,6 +20,21 @@ export default function User() {
 
     fetchUser();
   }, []);
+
+  const deleteUser = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/user/delete/${id}`);
+      console.log("User deleted successfully");
+      //fetchUser(); // Refresh the user list after deletion
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/update/${id}`); // Navigate to the update page with the user ID
+  };
+  
 
   return (
     <div>
@@ -43,7 +59,19 @@ export default function User() {
               <td> {users.name}</td>
               <td>{users.email}</td>
               <td>{users.phone}</td>
-              <td className='bg-primary'><Link to ="">Edit</Link><Link to ="">Delete</Link>
+              <td className='bg-primary'>
+              <button
+                    onClick={() => handleEdit(users.id)} // Navigate with ID
+                    className="bg-primary bg-blue-500 px-2 rounded"
+                  >
+                    Edit
+                  </button>
+              <button
+                    onClick={() => deleteUser(users.id)} // Call deleteUser function
+                    className="ml-4 text-white"
+                  >
+                    Delete
+                  </button>
               </td>
               </tr>
           ))
